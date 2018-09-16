@@ -32,6 +32,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise_token_auth'
 gem 'omniauth'
 
+# For restricting exposed fields via API endpoints
+gem 'active_model_serializers'
+
 # For validating time values reliably
 gem 'validates_timeliness'
 
