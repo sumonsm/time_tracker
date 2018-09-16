@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_16_220109) do
+ActiveRecord::Schema.define(version: 2018_09_16_221725) do
+
+  create_table "tracked_times", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "started", null: false
+    t.datetime "stopped", null: false
+    t.index ["user_id"], name: "index_tracked_times_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
