@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Timer extends Component {
   state = {
     timerRecords: 0,
     list: [],
+    listData: [],
     started: false,
     runningTime: 0
   };
+
+  async componentDidMount() {
+    const data = (await axios.get('http://localhost:3000/v1/users/1/tracked_times/')).data;
+    this.setState({listData: data});
+    console.log(data);
+  }
 
   render () {
     const { started, runningTime } = this.state;
