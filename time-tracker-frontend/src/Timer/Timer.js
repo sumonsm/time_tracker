@@ -9,7 +9,7 @@ class Timer extends Component {
   };
 
   render () {
-    const { timerRecords, list, started, runningTime } = this.state;
+    const { started, runningTime } = this.state;
     const children = [];
     for (var i = 0; i < this.state.list.length; i += 1) {
       children.push(<HistoryLine key={i} item={this.state.list[i]}/>);
