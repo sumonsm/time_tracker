@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 class Timer extends Component {
   state = {
@@ -11,15 +12,22 @@ class Timer extends Component {
   };
 
   async componentDidMount() {
-    const data = (await axios.get('http://localhost:3000/v1/users/1/tracked_times/')).data;
-    this.setState({listData: data});
-    console.log(data);
+    // fetch history from api
+    const res = (await axios.get('http://localhost:3000/v1/users/1/tracked_times/')).data;
+    var fetchedList = [];
+    for (var i = 0; i < res.data.length; i++) {
+      const started = moment.utc(res.data[i].attributes.started, "HH:mm:ss");
+      const stopped = moment.utc(res.data[i].attributes.stopped, "HH:mm:ss");
+      const timeDiff = moment.duration(stopped.diff(started)).asSeconds();
+      fetchedList.push(timeDiff);
+    }
+    this.setState({list: fetchedList});
   }
 
   render () {
     const { started, runningTime } = this.state;
     const children = [];
-    for (var i = 0; i < this.state.list.length; i += 1) {
+    for (var i = this.state.list.length - 1; i >= 0; i -= 1) {
       children.push(<HistoryLine key={i} item={this.state.list[i]}/>);
     };
     return (
@@ -36,12 +44,28 @@ class Timer extends Component {
     this.setState(state => {
       if (state.started) {
         const startTime = Date.now() - this.state.runningTime;
+        const stopTime = Date.now();
         const record = this.state.list.concat(Math.round((Date.now() - startTime)/1000));
         clearInterval(this.timer);
         this.setState({
           runningTime: 0,
           started: false,
           list: record
+        });
+
+        // save via api call
+        axios.post('http://localhost:3000/v1/users/1/tracked_times/', {
+          tracked_times: {
+            user_id: 1,
+            started: moment(startTime).toISOString(),
+            stopped: moment(stopTime).toISOString()
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
         });
 
       } else {

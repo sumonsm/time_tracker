@@ -11,7 +11,7 @@ module Api::V1
     def create
       @tracked_time = TrackedTime.new(tracked_times_params)
       if @tracked_time.save
-        render json: @tracked_time, status: :created, location:api_v1_tracked_time_url(@tracked_time)
+        render json: @tracked_time, status: :created, location: v1_user_tracked_times_url(@tracked_time)
       else
         render json: @tracked_time.errors, status: :unprocessable_entity
        end
