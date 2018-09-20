@@ -7,7 +7,8 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 
 import './App.css';
-import Timer from '../Timer/Timer';
+import { Home } from '../Home';
+import { LoginPage } from '../LoginPage';
 
 class App extends Component {
   constructor(props) {
@@ -35,8 +36,8 @@ class App extends Component {
                         }
                       <Router history={history}>
                           <div>
-                             <h1>Timer</h1>
-                             <Timer status={false} runningTime={0} />
+                            <PrivateRoute exact path="/" component={Home} />
+                            <Route path="/login" component={LoginPage} />
                           </div>
                       </Router>
                   </div>
