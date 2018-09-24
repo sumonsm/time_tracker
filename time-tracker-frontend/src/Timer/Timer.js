@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
+import { authHeader } from '../_helpers';
+const apiUrl = 'http://localhost:3000';
+const userId = JSON.parse(localStorage.getItem('user')).user_data.id;
+
 class Timer extends Component {
   state = {
     timerRecords: 0,
@@ -13,7 +17,13 @@ class Timer extends Component {
 
   async componentDidMount() {
     // fetch history from api
-    const res = (await axios.get('http://localhost:3000/v1/users/1/tracked_times/')).data;
+    const requestOptions = {
+        method: 'GET',
+        url: `${apiUrl}/v1/users/${userId}/tracked_times/`,
+        headers: authHeader()
+    };
+    const res = (await axios(requestOptions)).data;
+
     var fetchedList = [];
     for (var i = 0; i < res.data.length; i++) {
       const started = moment.utc(res.data[i].attributes.started, "HH:mm:ss");
@@ -54,13 +64,19 @@ class Timer extends Component {
         });
 
         // save via api call
-        axios.post('http://localhost:3000/v1/users/1/tracked_times/', {
-          tracked_times: {
-            user_id: 1,
-            started: moment(startTime).toISOString(),
-            stopped: moment(stopTime).toISOString()
-          }
-        })
+        const requestOptions = {
+            method: 'POST',
+            url: `${apiUrl}/v1/users/${userId}/tracked_times/`,
+            headers: authHeader(),
+            data: {
+              tracked_times: {
+                user_id: userId,
+                started: moment(startTime).toISOString(),
+                stopped: moment(stopTime).toISOString()
+              }
+            }
+        };
+        axios(requestOptions)
         .then(function (response) {
           console.log(response);
         })
