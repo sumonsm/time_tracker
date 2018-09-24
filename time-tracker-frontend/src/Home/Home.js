@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Timer from '../Timer/Timer';
+import { Timer } from '../Timer';
 
 class Home extends React.Component {
     render() {
@@ -11,7 +11,7 @@ class Home extends React.Component {
             <div>
                 <div>
                     <span>
-                       <strong>Hi {user.user_data.name}!</strong>
+                       <strong>Hi {user ? user.user_data.name : 'Guest'}!</strong>
                     </span>&nbsp;
                     <span>
                         <Link to="/login">Logout</Link>

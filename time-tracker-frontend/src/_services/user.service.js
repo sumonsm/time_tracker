@@ -1,5 +1,5 @@
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000'
+import { apiUrl } from '../_helpers';
 
 export const userService = {
     login,

@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
-import { authHeader } from '../_helpers';
-const apiUrl = 'http://localhost:3000';
-const userId = JSON.parse(localStorage.getItem('user')).user_data.id;
+import { authHeader, userId, apiUrl } from '../_helpers';
 
-class Timer extends Component {
+export class Timer extends Component {
   state = {
     timerRecords: 0,
     list: [],
@@ -113,5 +111,3 @@ const HistoryList = props => (
 );
 
 const HistoryLine = props => <div className='line'>{props.item} seconds</div>;
-
-export default Timer;
