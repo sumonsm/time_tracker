@@ -29,7 +29,7 @@ function login(email, password) {
       }
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("Error", error);
     });
 }
 
