@@ -30,13 +30,9 @@ gem 'rack-cors'
 
 # For api authentication
 gem 'devise_token_auth'
-gem 'omniauth'
 
 # For restricting exposed fields via API endpoints
 gem 'active_model_serializers'
-
-# For validating time values reliably
-gem 'validates_timeliness'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -51,7 +47,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

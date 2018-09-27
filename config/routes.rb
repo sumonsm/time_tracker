@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth'
-  
+
   scope module: 'api' do
     namespace :v1 do
-      resources :users, only: [:index, :show] do
-        resources :tracked_times, on: :member, only: [:index, :show, :create]
-      end
+      resources :tracked_times, only: [:index, :create]
     end
   end
 end
